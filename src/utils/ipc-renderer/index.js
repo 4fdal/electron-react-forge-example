@@ -13,3 +13,13 @@
 export function rendererInvoke(channel, ...args) {
   return window.electron.ipcRendererInvoke(channel, args)
 }
+
+/**
+ * 
+ * @param {AxiosRequestConfig<any>} config 
+ * 
+ * @return {Promise<any>}
+ */
+export function rendererInvokeRequest(config) {
+  return rendererInvoke('request', config)
+}

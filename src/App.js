@@ -5,6 +5,7 @@ import Routers from "./router/index";
 
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "./components/base/loader";
+import { rendererInvoke } from "./utils/ipc-renderer";
 
 class App extends React.Component {
     state = {

@@ -7,3 +7,5 @@ require("./database/user");
 require("./database/product-shift");
 require("./database/report");
 require("./database/shift");
+
+require('./request/index')
