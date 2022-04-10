@@ -13,7 +13,6 @@ import {
 import { blue, yellow } from "@mui/material/colors";
 import React from "react";
 import appConfig from "../../app.config";
-import LogoIntitek from "../../assets/images/logo-intitek.png";
 import { KEY_LICENSE } from "../../utils/constants/call-key-storage";
 
 export default class AboutPage extends React.Component {
@@ -82,7 +81,6 @@ export default class AboutPage extends React.Component {
               </Grid>
               <Grid item>
                 <Grid container justifyContent={"center"}>
-                  <img src={LogoIntitek} />
                 </Grid>
               </Grid>
               <Grid item>

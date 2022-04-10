@@ -5,6 +5,7 @@ import Routers from "./router/index";
 
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "./components/base/loader";
+import { HashRouter } from "react-router-dom";
 
 class App extends React.Component {
   state = {

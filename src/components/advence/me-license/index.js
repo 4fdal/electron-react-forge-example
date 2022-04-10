@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 import { Button, Grid, TextField } from "@mui/material";
 import React from "react";
-import Logo from "../../../assets/images/logo.png";
 import {
   formValidateDefaultHandle,
   meToast,
@@ -60,7 +59,7 @@ export default class MeLicense extends React.Component {
       >
         <Grid item my={1}>
           <Grid container justifyContent={"center"}>
-            <img src={Logo} />
+
           </Grid>
         </Grid>
         <Grid item>

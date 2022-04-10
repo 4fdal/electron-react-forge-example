@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import React from "react";
 
-import Logo from "../../../assets/images/logo.png";
 import {
   formValidateDefaultHandle,
   formValidateErrorHandle,
@@ -39,7 +38,10 @@ export default class MeLogin extends React.Component {
   // request get shifts
   getShifts = () => {
     return RequestShift.getPublicShifts().then(shifts => {
-      this.setState({ shifts });
+
+      console.log(shifts)
+
+      // this.setState({ shifts });
     });
   };
 
@@ -48,13 +50,13 @@ export default class MeLogin extends React.Component {
     return RequestUser.getPublicUsers().then(users => {
 
       // add super admin account
-      const { name, username } = appConfig.accounts.superAdmin
-      users.push({ name, username })
+      // const { name, username } = appConfig.accounts.superAdmin
+      // users.push({ name, username })
 
-      this.setState({
-        users,
-        username: users.length > 0 ? users[0].username : "",
-      })
+      // this.setState({
+      //   users,
+      //   username: users.length > 0 ? users[0].username : "",
+      // })
     }
     );
   };
@@ -89,6 +91,7 @@ export default class MeLogin extends React.Component {
   };
 
   render = () => {
+
     return (
       <Grid
         container
@@ -99,7 +102,6 @@ export default class MeLogin extends React.Component {
       >
         <Grid item my={3}>
           <Grid container justifyContent={"center"}>
-            <img width={"50%"} src={Logo} />
           </Grid>
         </Grid>
         <Grid item>

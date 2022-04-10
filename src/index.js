@@ -1,8 +1,17 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import App from "./App";
+import { HashRouter } from "react-router-dom";
 
 function render() {
-    ReactDOM.render(<h2>Hello from React!</h2>, document.getElementById("app"));
+    ReactDOM.render(
+        <React.StrictMode>
+            <HashRouter>
+                <App />
+            </HashRouter>
+        </React.StrictMode>,
+        document.getElementById("root")
+    );
 }
 
 render();
