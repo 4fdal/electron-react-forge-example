@@ -8,15 +8,16 @@ import { rendererInvoke } from "../../ipc-renderer";
 
 export default class RequestApplication {
   static getApplications(objectQueryString = {}, isSync = false) {
-    return MeRequest.get(
-      getApiV1BasePath(
+    return MeRequest({
+      url: getApiV1BasePath(
         "/application?" +
-          objectToQueryString({ ...objectQueryString, all: true })
-      )
-    )
+        objectToQueryString({ ...objectQueryString, all: true })
+      ),
+      method: 'get'
+    })
       .then(async response => {
         const {
-          data: { data },
+          data,
         } = response;
 
         try {
@@ -26,18 +27,17 @@ export default class RequestApplication {
           if (isSync) {
             try {
               const {
-                data: {
-                  data: { data: newArraySyncData },
-                },
-              } = await MeRequest.get(
-                getApiV1BasePath(
+                data: { data: newArraySyncData },
+              } = await MeRequest({
+                method: 'get',
+                url: getApiV1BasePath(
                   "/application?" + objectToQueryString({ all: true })
                 )
-              );
+              });
 
               arraySyncData = newArraySyncData;
               isFreshDataTable = true;
-            } catch (error) {}
+            } catch (error) { }
           }
 
           await rendererInvoke(
@@ -46,7 +46,7 @@ export default class RequestApplication {
             arraySyncData,
             { isFreshDataTable }
           );
-        } catch (error) {}
+        } catch (error) { }
 
         return data;
       })
@@ -61,7 +61,7 @@ export default class RequestApplication {
             );
 
             return Promise.resolve(data);
-          } catch (error) {}
+          } catch (error) { }
         }
 
         throw err;

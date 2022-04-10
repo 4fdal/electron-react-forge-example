@@ -32,6 +32,8 @@ export default class ReportTableSimple extends React.Component {
     this.setState({ isLoading: true });
     return RequestReport.getReports(objectToQueryString)
       .then(response => {
+
+
         let {
           data: tableData,
           total: count,
@@ -51,7 +53,10 @@ export default class ReportTableSimple extends React.Component {
 
         this.setState({ tableData, count, page, per_page });
       })
-      .catch(err => err.handle())
+      .catch(err => {
+        console.log(err)
+        // err.handle()
+      })
       .finally(() => this.setState({ isLoading: false }));
   };
   componentDidMount = () => {

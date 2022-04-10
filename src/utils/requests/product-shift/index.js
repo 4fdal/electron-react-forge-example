@@ -8,47 +8,46 @@ import { rendererInvoke } from "../../ipc-renderer";
 
 export default class RequestProductShift {
   static getProductShifts(objectQueryString, isSync = false) {
-    return MeRequest.get(
-      getApiV1BasePath(
+    return MeRequest({
+      method: 'get',
+      url: getApiV1BasePath(
         "/product_shift?" + objectToQueryString(objectQueryString)
       )
-    )
-      .then(async response => {
-        const {
-          data: { data },
-        } = response;
+    }).then(async response => {
+      const {
+        data,
+      } = response;
 
-        try {
-          let isFreshDataTable = false;
-          let arraySyncData = data.data;
+      try {
+        let isFreshDataTable = false;
+        let arraySyncData = data.data;
 
-          if (isSync) {
-            try {
-              const {
-                data: {
-                  data: { data: newArraySyncData },
-                },
-              } = await MeRequest.get(
-                getApiV1BasePath(
-                  "/product_shift?" + objectToQueryString({ all: true })
-                )
-              );
+        if (isSync) {
+          try {
+            const {
+              data: newArraySyncData,
+            } = await MeRequest({
+              method: 'get',
+              url: getApiV1BasePath(
+                "/product_shift?" + objectToQueryString({ all: true })
+              )
+            })
 
-              arraySyncData = newArraySyncData;
-              isFreshDataTable = true;
-            } catch (error) {}
-          }
+            arraySyncData = newArraySyncData;
+            isFreshDataTable = true;
+          } catch (error) { }
+        }
 
-          await rendererInvoke(
-            "sync.product_shifts",
-            getConnectionDatabase(),
-            arraySyncData,
-            { isFreshDataTable }
-          );
-        } catch (error) {}
+        await rendererInvoke(
+          "sync.product_shifts",
+          getConnectionDatabase(),
+          arraySyncData,
+          { isFreshDataTable }
+        );
+      } catch (error) { }
 
-        return data;
-      })
+      return data;
+    })
       .catch(async err => {
         // if failed to connect server, get data from local database
         if ([404, 500, undefined].includes(err?.response?.status)) {
@@ -60,7 +59,7 @@ export default class RequestProductShift {
             );
 
             return Promise.resolve(data);
-          } catch (error) {}
+          } catch (error) { }
         }
 
         throw err;

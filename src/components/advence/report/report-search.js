@@ -23,7 +23,7 @@ export default class ReportSearch extends React.Component {
       product_id,
       shift_id,
       user_id,
-    }) => { },
+    }) => {},
     onExport: ({
       from,
       to,
@@ -32,15 +32,15 @@ export default class ReportSearch extends React.Component {
       shift_id,
       user_id,
       all = true,
-    }) => { },
+    }) => {},
   };
 
   state = {
-    from: momen(new Date()).format("YYYY-MM-DD") + " 00:00:00",
+    from: momen(new Date()).format("YYYY-MM-DD") + "T00:00:00",
     operators: [],
     products: [],
     shifts: [],
-    to: momen(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+    to: momen(new Date()).format("YYYY-MM-DDTHH:mm:ss"),
     product_id: "",
     machine_number: "",
     user_id: "",
@@ -70,7 +70,7 @@ export default class ReportSearch extends React.Component {
   getFragmentReportSearch = () => {
     this.setState({ isLoading: true });
     return RequestReport.getFragmentReportSearch()
-      .then(response => {
+      .then((response) => {
         let { operators, products, shifts } = response;
         this.setState({ operators, products, shifts });
       })
@@ -101,7 +101,7 @@ export default class ReportSearch extends React.Component {
             fullWidth
             onChange={onChangeHandle(this, "from")}
             value={this.state.from}
-            type="datetime"
+            type="datetime-local"
             id="outlined-basic"
             label="From"
             InputLabelProps={{
@@ -116,7 +116,7 @@ export default class ReportSearch extends React.Component {
             fullWidth
             onChange={onChangeHandle(this, "to")}
             value={this.state.to}
-            type="datetime"
+            type="datetime-local"
             id="outlined-basic"
             label="To"
             InputLabelProps={{

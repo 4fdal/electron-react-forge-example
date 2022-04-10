@@ -128,10 +128,12 @@ export default class RequestAuth {
     router = { navigate: (to, options) => { } },
     defaultRedirect = "/auth"
   ) {
-    return MeRequest.post(getApiV1BasePath("/auth/logout"))
-      .then(({ data: { data } }) => {
-        return data;
-      })
+    return MeRequest({
+      method: 'post',
+      url: getApiV1BasePath("/auth/logout")
+    }).then(({ data }) => {
+      return data;
+    })
       .catch(err => {
         if ([404, 500, undefined].includes(err?.response?.status)) {
           return Promise.resolve({});

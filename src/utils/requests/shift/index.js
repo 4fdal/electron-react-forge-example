@@ -29,43 +29,42 @@ export default class RequestShift {
       });
   }
   static getShifts(objectQueryString, isSync = false) {
-    return MeRequest.get(
-      getApiV1BasePath("/shift?" + objectToQueryString(objectQueryString))
-    )
-      .then(async response => {
-        const {
-          data: { data },
-        } = response;
+    return MeRequest({
+      method: 'get',
+      url: getApiV1BasePath("/shift?" + objectToQueryString(objectQueryString))
+    }).then(async response => {
+      const {
+        data,
+      } = response;
 
-        try {
-          let isFreshDataTable = false;
-          let arraySyncData = data.data;
+      try {
+        let isFreshDataTable = false;
+        let arraySyncData = data.data;
 
-          if (isSync) {
-            try {
-              const {
-                data: {
-                  data: { data: newArraySyncData },
-                },
-              } = await MeRequest.get(
-                getApiV1BasePath("/shift?" + objectToQueryString({ all: true }))
-              );
+        if (isSync) {
+          try {
+            const {
+              data: { data: newArraySyncData },
+            } = await MeRequest({
+              method: 'get',
+              url: getApiV1BasePath("/shift?" + objectToQueryString({ all: true }))
+            })
 
-              arraySyncData = newArraySyncData;
-              isFreshDataTable = true;
-            } catch (error) { }
-          }
+            arraySyncData = newArraySyncData;
+            isFreshDataTable = true;
+          } catch (error) { }
+        }
 
-          await rendererInvoke(
-            "sync.shifts",
-            getConnectionDatabase(),
-            arraySyncData,
-            { isFreshDataTable }
-          );
-        } catch (error) { }
+        await rendererInvoke(
+          "sync.shifts",
+          getConnectionDatabase(),
+          arraySyncData,
+          { isFreshDataTable }
+        );
+      } catch (error) { }
 
-        return data;
-      })
+      return data;
+    })
       .catch(async err => {
         // if failed to connect server, get data from local database
         if ([404, 500, undefined].includes(err?.response?.status)) {

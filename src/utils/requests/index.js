@@ -3,6 +3,7 @@ import {
   axiosErrorHandle,
   getApiBasePath,
 } from "../helpers/call-helper";
+import { rendererInvokeRequest } from "../ipc-renderer";
 
 
 /**
@@ -17,20 +18,20 @@ export async function MeRequest(config = {}) {
     const token = localStorage.getItem(KEY_ACCESS_TOKEN);
 
     // auto use token, if token exist in local storage
+    config.headers = { ...config.headers }
     if (token) {
       config.headers["Authorization"] = "Bearer " + token;
     }
 
-    const request = await rendererInvokeRequest('request', {
+    return await rendererInvokeRequest({
       ...config,
       url: getApiBasePath(config.url),
     })
 
-    return request
-
   } catch (error) {
+
     error.handle = axiosErrorHandle(error);
-    return Promise.reject(error)
+    return await Promise.reject(error)
   }
 
 }

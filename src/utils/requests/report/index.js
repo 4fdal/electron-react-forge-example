@@ -38,17 +38,18 @@ export default class RequestReport {
             dataIsSyncronized
           );
         }
-      } catch (error) {}
+      } catch (error) { }
 
       // console.log("Success all sync");
       // console.log(dataIsSyncronized, "dataIsSyncronized");
 
       try {
         const {
-          data: { data },
-        } = await MeRequest.get(
-          getApiV1BasePath("/report?" + objectToQueryString(objectQueryString))
-        );
+          data,
+        } = await MeRequest({
+          method: 'get',
+          url: getApiV1BasePath("/report?" + objectToQueryString(objectQueryString))
+        })
 
         try {
           let isFreshDataTable = false;
@@ -58,18 +59,17 @@ export default class RequestReport {
           if (isSync) {
             try {
               const {
-                data: {
-                  data: { data: newArraySyncData },
-                },
-              } = await MeRequest.get(
-                getApiV1BasePath(
+                data: { data: newArraySyncData },
+              } = await MeRequest({
+                method: 'get',
+                url: getApiV1BasePath(
                   "/report?" + objectToQueryString({ all: true })
                 )
-              );
+              })
 
               arraySyncData = newArraySyncData;
               isFreshDataTable = true;
-            } catch (error) {}
+            } catch (error) { }
           }
 
           await rendererInvoke(
@@ -78,10 +78,12 @@ export default class RequestReport {
             arraySyncData,
             { isFreshDataTable }
           );
-        } catch (error) {}
+        } catch (error) { }
 
         return data;
       } catch (err) {
+
+
         // if failed to connect server, get data from local database
         if ([404, 500, undefined].includes(err?.response?.status)) {
           try {
@@ -92,7 +94,7 @@ export default class RequestReport {
             );
 
             return Promise.resolve(data);
-          } catch (error) {}
+          } catch (error) { }
         }
 
         throw err;
@@ -101,8 +103,11 @@ export default class RequestReport {
   }
 
   static getFragmentReportSearch() {
-    return MeRequest.get(getApiV1BasePath("/fragment/report/search"))
-      .then(({ data: { data } }) => {
+    return MeRequest({
+      url: getApiV1BasePath("/fragment/report/search"),
+      method: 'get',
+    })
+      .then(({ data }) => {
         return data;
       })
       .catch(async err => {
@@ -130,7 +135,7 @@ export default class RequestReport {
             const result = { products, shifts, operators };
 
             return Promise.resolve(result);
-          } catch (error) {}
+          } catch (error) { }
         }
 
         throw err;
@@ -138,10 +143,13 @@ export default class RequestReport {
   }
 
   static createNewReport(objectDataReport = {}) {
-    return MeRequest.post(getApiV1BasePath("/report"), objectDataReport)
-      .then(({ data }) => {
-        return data;
-      })
+    return MeRequest({
+      url: getApiV1BasePath("/report"),
+      method: 'post',
+      data: objectDataReport
+    }).then((response) => {
+      return response;
+    })
       .catch(async err => {
         if ([404, 500, undefined].includes(err?.response?.status)) {
           try {
@@ -160,7 +168,7 @@ export default class RequestReport {
               data: objectDataReport,
               errors: null,
             });
-          } catch (error) {}
+          } catch (error) { }
         }
 
         throw err;
@@ -168,8 +176,12 @@ export default class RequestReport {
   }
 
   static createNewReportBulk(arrayObjectDataReport = []) {
-    return MeRequest.post(getApiV1BasePath("/report/store/all"), {
-      item: arrayObjectDataReport,
+    return MeRequest({
+      method: 'post',
+      url: getApiV1BasePath("/report/store/all"),
+      data: {
+        item: arrayObjectDataReport,
+      }
     }).then(({ data }) => data);
   }
 }
