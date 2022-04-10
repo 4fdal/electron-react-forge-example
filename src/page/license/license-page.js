@@ -1,0 +1,26 @@
+import { Grid, Paper } from "@mui/material";
+import React from "react";
+import MeLicense from "../../components/advence/me-license";
+
+export default class LicensePage extends React.Component {
+  render = () => {
+    console.log(this.props);
+
+    return (
+      <Grid container justifyContent={"center"}>
+        <Grid item>
+          <Paper
+            sx={{
+              width: 300,
+              marginTop: 10,
+              padding: 2,
+              borderRadius: 2,
+            }}
+          >
+            <MeLicense {...this.props} />
+          </Paper>
+        </Grid>
+      </Grid>
+    );
+  };
+}
