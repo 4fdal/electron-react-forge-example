@@ -38,25 +38,21 @@ export default class MeLogin extends React.Component {
   // request get shifts
   getShifts = () => {
     return RequestShift.getPublicShifts().then(shifts => {
-
-      console.log(shifts)
-
-      // this.setState({ shifts });
+      this.setState({ shifts });
     });
   };
 
   // request get user
   getUsers = () => {
     return RequestUser.getPublicUsers().then(users => {
-
       // add super admin account
-      // const { name, username } = appConfig.accounts.superAdmin
-      // users.push({ name, username })
+      const { name, username } = appConfig.accounts.superAdmin
+      users.push({ name, username })
 
-      // this.setState({
-      //   users,
-      //   username: users.length > 0 ? users[0].username : "",
-      // })
+      this.setState({
+        users,
+        username: users.length > 0 ? users[0].username : "",
+      })
     }
     );
   };

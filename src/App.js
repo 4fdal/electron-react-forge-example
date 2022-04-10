@@ -7,29 +7,25 @@ import "react-toastify/dist/ReactToastify.css";
 import Loader from "./components/base/loader";
 
 class App extends React.Component {
-  state = {
-    isLoader: false,
-  };
+    state = {
+        isLoader: false,
+    };
 
-  // set loaded with context
-  setLoader = (isLoader = true) => this.setState({ isLoader });
+    // set loaded with context
+    setLoader = (isLoader = true) => this.setState({ isLoader });
 
-  // get status loaded with context
-  getLoader = () => this.state.isLoader;
+    // get status loaded with context
+    getLoader = () => this.state.isLoader;
 
-  render = () => {
-
-    console.log(window.require('electron'))
-
-
-    return (
-      <AppContext.Provider value={this}>
-        <Loader open={this.getLoader()} />
-        <ToastContainer />
-        <Routers />
-      </AppContext.Provider>
-    );
-  };
+    render = () => {
+        return (
+            <AppContext.Provider value={this}>
+                <Loader open={this.getLoader()} />
+                <ToastContainer />
+                <Routers />
+            </AppContext.Provider>
+        );
+    };
 }
 
 export default App;

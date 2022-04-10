@@ -94,7 +94,6 @@ export const axiosErrorHandle =
       }
 
       if (config?.isAllowToast) {
-        console.log(message);
         meToast("error", message);
       }
       return response;

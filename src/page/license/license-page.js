@@ -4,8 +4,6 @@ import MeLicense from "../../components/advence/me-license";
 
 export default class LicensePage extends React.Component {
   render = () => {
-    console.log(this.props);
-
     return (
       <Grid container justifyContent={"center"}>
         <Grid item>

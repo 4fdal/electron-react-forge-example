@@ -92,7 +92,6 @@ export default class InputDatabaseSetting extends React.Component {
       database,
     })
       .then(response => {
-        console.log(response);
         meToast("success", "Berhasil melakukan koneksi ke");
       })
       .catch(err => {

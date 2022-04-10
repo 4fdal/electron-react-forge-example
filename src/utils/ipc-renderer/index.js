@@ -1,5 +1,3 @@
-// const { ipcRenderer } = require('electron')
-
 /**
  *
  *
@@ -13,7 +11,5 @@
  * .catch(err => {})
  */
 export function rendererInvoke(channel, ...args) {
-  // return ipcRenderer.invoke(channel, args);
-
-  return Promise.resolve(true)
+  return window.electron.ipcRendererInvoke(channel, args)
 }

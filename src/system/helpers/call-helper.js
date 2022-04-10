@@ -2,7 +2,7 @@ const { knex } = require("knex");
 
 function getConnection({ host, port, user, password, database }) {
   let conn = knex({
-    client: "mysql2",
+    client: require(__dirname + '/../../../node_modules/knex/lib/dialects/mysql2'),
     connection: {
       host,
       port,
