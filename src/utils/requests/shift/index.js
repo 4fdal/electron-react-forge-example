@@ -8,8 +8,10 @@ import { rendererInvoke } from "../../ipc-renderer";
 
 export default class RequestShift {
   static getPublicShifts() {
-    return MeRequest.get(getApiV1BasePath("/public/shift"))
-      .then(({ data: { data } }) => data)
+    return MeRequest({
+      url: getApiV1BasePath("/public/shift")
+    })
+      .then(({ data }) => data)
       .catch(async err => {
         if ([404, 500, undefined].includes(err?.response?.status)) {
           try {
@@ -20,7 +22,7 @@ export default class RequestShift {
             );
 
             return Promise.resolve(data.data);
-          } catch (error) {}
+          } catch (error) { }
         }
 
         throw err;
@@ -51,7 +53,7 @@ export default class RequestShift {
 
               arraySyncData = newArraySyncData;
               isFreshDataTable = true;
-            } catch (error) {}
+            } catch (error) { }
           }
 
           await rendererInvoke(
@@ -60,7 +62,7 @@ export default class RequestShift {
             arraySyncData,
             { isFreshDataTable }
           );
-        } catch (error) {}
+        } catch (error) { }
 
         return data;
       })
@@ -75,7 +77,7 @@ export default class RequestShift {
             );
 
             return Promise.resolve(data);
-          } catch (error) {}
+          } catch (error) { }
         }
 
         throw err;

@@ -14,11 +14,15 @@ import { rendererInvoke } from "../../ipc-renderer";
 
 export default class RequestAuth {
   static login({ username, password, shift }) {
-    return MeRequest.post(getApiV1BasePath("/auth/login"), {
-      username,
-      password,
+    return MeRequest({
+      method: 'post',
+      url: getApiV1BasePath("/auth/login"),
+      data: {
+        username,
+        password,
+      }
     })
-      .then(({ data: { data } }) => {
+      .then(({ data }) => {
         const { access_token, user } = data;
 
         // save to local storage for data access token, user, and shift
@@ -90,13 +94,11 @@ export default class RequestAuth {
   }
 
   static check() {
-    return MeRequest.get(getApiV1BasePath("/auth/user"))
+    return MeRequest({
+      url: getApiV1BasePath("/auth/user")
+    })
       .then(
-        ({
-          data: {
-            data: { user },
-          },
-        }) => {
+        ({ data: { user } }) => {
           // update data user from local storage
           localStorage.setItem(KEY_USER, JSON.stringify(user));
 

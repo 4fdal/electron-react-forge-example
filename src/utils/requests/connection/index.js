@@ -5,8 +5,9 @@ export default class RequestConnection {
   static test({ host, port }) {
     return rendererInvokeRequest({
       url: `${host}:${port}/api/v1/test`,
-    }).then(
-      ({ data: { data } }) => data
-    );
+      method: 'post',
+    }).then(({ data }) => {
+      return data
+    });
   }
 }
