@@ -5,7 +5,6 @@ import Routers from "./router/index";
 
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "./components/base/loader";
-import { HashRouter } from "react-router-dom";
 
 class App extends React.Component {
   state = {
@@ -19,6 +18,10 @@ class App extends React.Component {
   getLoader = () => this.state.isLoader;
 
   render = () => {
+
+    console.log(window.require('electron'))
+
+
     return (
       <AppContext.Provider value={this}>
         <Loader open={this.getLoader()} />

@@ -80,9 +80,6 @@
     "style-loader": "^3.0.0"
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0",
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0",
     "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.5.1",
     "@mui/material": "^5.5.1",
@@ -91,14 +88,23 @@
     "bcrypt": "^5.0.1",
     "cross-env": "^7.0.3",
     "electron-is-dev": "^2.0.0",
+    "electron-squirrel-startup": "^1.0.0",
     "export-from-json": "^1.6.0",
     "knex": "^1.0.3",
     "moment": "^2.29.1",
     "mysql2": "^2.3.3",
+    "path-browserify": "^1.0.1",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
     "react-router-dom": "^6.2.2",
     "react-toastify": "^8.2.0",
     "styled-components": "^5.3.3",
     "uuid": "^8.3.2",
     "web-vitals": "^2.1.4"
+  },
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
   }
 }
